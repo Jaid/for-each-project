@@ -2,6 +2,7 @@
 
 import runForProjects from "lib/runForProjects"
 import octokit from "lib/octokit"
+import fsp from "@absolunet/fsp"
 
 import text from "./text.txt"
 
@@ -11,23 +12,7 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-  const githubRepo = await octokit.repos.get({
-    owner: "Jaid",
-    repo: project.folderName,
-  })
-  if (!githubRepo) {
-    return
-  }
-  if (!githubRepo.data.description) {
-    return
-  }
-  if (project.pkg.description === githubRepo.data.description) {
-    log("Description already uptodate")
-    return
-  }
-  project.pkg.description = githubRepo.data.description
-  await project.writePkg()
-  await project.gitFlush("Added description to pkg")
+
 }
 
 async function main() {

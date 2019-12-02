@@ -124,4 +124,13 @@ export default class Project {
     return this.pkg?.scripts?.[name] || null
   }
 
+  /**
+   * @param {string} relativePath
+   * @param {string} text
+   * @return {Promise<void>}
+   */
+  async writeFile(relativePath, text) {
+    await fsp.outputFile(this.relativeFile(relativePath), text)
+  }
+
 }
