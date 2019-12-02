@@ -3,6 +3,11 @@ import path from "path"
 import fsp from "@absolunet/fsp"
 import gitFlush from "git-flush"
 import simpleGit from "simple-git/promise"
+import chalk from "chalk"
+
+const log = message => {
+  process.stdout.write(`╎ ${chalk.yellow(message)}\n`)
+}
 
 export default class Project {
 
@@ -17,7 +22,7 @@ export default class Project {
 
   async init() {
     this.folderName = path.basename(this.directory)
-    this.pkg = await this.getFileString("package.json")
+    this.pkg = await this.readFileJson("package.json")
   }
 
   /**
@@ -32,13 +37,27 @@ export default class Project {
    * @param {string} relativePath
    * @return {Promise<string>}
    */
-  async getFileString(relativePath) {
+  async readFileText(relativePath) {
     const file = this.relativeFile(relativePath)
     const exists = await fsp.pathExists(file)
     if (!exists) {
       return null
     }
     const text = await fsp.readFile(file, "utf8")
+    return text
+  }
+
+  /**
+   * @param {string} relativePath
+   * @return {Promise<string>}
+   */
+  async readFileJson(relativePath) {
+    const file = this.relativeFile(relativePath)
+    const exists = await fsp.pathExists(file)
+    if (!exists) {
+      return null
+    }
+    const text = await fsp.readJson5(file)
     return text
   }
 
@@ -64,11 +83,14 @@ export default class Project {
    * @param {string} message
    */
   async gitFlush(message) {
-    await gitFlush(message, {
+    const result = await gitFlush(message, {
       pull: true,
       push: true,
       directory: this.directory,
     })
+    if (result) {
+      log(`Commit: ${message}`)
+    }
   }
 
   relativeFile(relativePath) {

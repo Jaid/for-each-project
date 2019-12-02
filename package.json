@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "author": "Jaid <jaid.jsx@gmail.com> (https://github.com/Jaid)",
   "dependencies": {
+    "@absolunet/fsp": "^1.6.2",
     "@babel/runtime": "^7.7.4",
     "@octokit/rest": "^16.35.0",
     "chalk": "^3.0.0",
     "git-flush": "^2.0.0",
     "globby": "^10.0.1",
+    "has-content": "^1.1.0",
     "readable-ms": "^2.0.1",
     "simple-git": "^1.126.0"
   },

@@ -2,6 +2,7 @@ import globby from "globby"
 import readableMs from "readable-ms"
 import chalk from "chalk"
 import simpleGit from "simple-git/promise"
+import {isEmpty} from "has-content"
 
 import Project from "./Project"
 
@@ -28,6 +29,10 @@ export default async job => {
     await project.init()
     const gitRepository = simpleGit(dir)
     log(chalk.magenta(`${project.folderName} `.padEnd(60, "╴")))
+    if (!project.pkg) {
+      log(chalk.gray(`${project.folderName} has no pkg`))
+      continue
+    }
     const isGit = await gitRepository.checkIsRepo()
     if (!isGit) {
       log(chalk.gray(`${project.folderName} is not git`))
