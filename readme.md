@@ -5,6 +5,22 @@ Personal tool that iterates through all my projects to make bulk changes.
 
 
 
+## Try it out
+Open a browser's JavaScript console and execute:
+
+```javascript
+const scriptElement = document.createElement("script");
+scriptElement.setAttribute("type","text/javascript");
+scriptElement.setAttribute("src","https://unpkg.com/for-each-project@0.1.0");
+document.querySelector("head").appendChild(scriptElement);
+```
+
+The module is now loaded in a variable.
+
+```javascript
+typeof for-each-project.default
+```
+
 
 ## License
 ```text
