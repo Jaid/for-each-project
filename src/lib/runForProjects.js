@@ -9,6 +9,10 @@ const log = message => {
   process.stdout.write(`${message}\n`)
 }
 
+const indentLog = message => {
+  log(`╎ ${chalk.blueBright(message)}`)
+}
+
 /**
  * @return {Promise<Project[]>}
  */
@@ -23,7 +27,7 @@ export default async job => {
     const project = new Project(dir)
     await project.init()
     const gitRepository = simpleGit(dir)
-    log(chalk.magenta(project.folderName.padEnd(60)))
+    log(chalk.magenta(`${project.folderName} `.padEnd(60, "╴")))
     const isGit = await gitRepository.checkIsRepo()
     if (!isGit) {
       log(chalk.gray(`${project.folderName} is not git`))
@@ -34,7 +38,7 @@ export default async job => {
       log(chalk.gray(`${project.folderName} is dirty`))
       continue
     }
-    await job(project)
+    await job(project, indentLog)
     log(`Processed ${project.folderName} in ${readableMs(Date.now() - time)}`)
   }
 }
