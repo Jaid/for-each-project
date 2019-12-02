@@ -38,7 +38,7 @@ export default class Project {
     if (!exists) {
       return null
     }
-    const text = await fsp.readFile(file)
+    const text = await fsp.readFile(file, "utf-8")
     return text
   }
 
@@ -73,6 +73,14 @@ export default class Project {
 
   relativeFile(relativePath) {
     return path.resolve(this.directory, relativePath)
+  }
+
+  /**
+   * @param {string} name
+   * @return {string}
+   */
+  getScript(name) {
+    return this.pkg?.scripts?.[name] || null
   }
 
 }

@@ -1,8 +1,18 @@
 import runForProjects from "lib/runForProjects"
 
+/**
+ * @param {import("lib/Project").default} project
+ * @param {(string) => void} log
+ * @return {Promise<void>}
+ */
 async function job(project, log) {
-  log("hi")
-  log("hello")
+  if (!project.pkg) {
+    return
+  }
+  const prepar = project.getScript("preparActionJest")
+  if (prepar) {
+    log("HELP")
+  }
 }
 
 async function main() {
