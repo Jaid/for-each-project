@@ -44,6 +44,7 @@ export default async job => {
       continue
     }
     await job(project, indentLog)
+    await project.gitFlush("Modified in bulk with jaid/for-each-project")
     log(`Processed ${project.folderName} in ${readableMs(Date.now() - time)}`)
   }
 }
