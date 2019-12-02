@@ -38,7 +38,7 @@ export default class Project {
     if (!exists) {
       return null
     }
-    const text = await fsp.readFile(file, "utf-8")
+    const text = await fsp.readFile(file, "utf8")
     return text
   }
 
