@@ -23,5 +23,8 @@
     "webpack": "^4.41.2",
     "webpack-config-jaid": "^5.29.1"
   },
-  "name": "for-each-project"
+  "name": "for-each-project",
+  "scripts": {
+    "prepareActionJest": "npm run build:prod"
+  }
 }
