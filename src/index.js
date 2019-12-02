@@ -1,6 +1,8 @@
-import runForProjects from "lib/runForProjects"
+/* eslint-disable no-unused-vars */
 
-// eslint-disable-next-line no-unused-vars
+import runForProjects from "lib/runForProjects"
+import octokit from "lib/octokit"
+
 import text from "./text.txt"
 
 /**
@@ -9,12 +11,23 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-  const prepar = project.getScript("preparActionJest")
-  if (prepar) {
-    delete project.pkg.scripts.preparActionJest
-    await project.writePkg(project.pkg)
-    await project.gitFlush("Removed unneeded script")
+  const githubRepo = await octokit.repos.get({
+    owner: "Jaid",
+    repo: project.folderName,
+  })
+  if (!githubRepo) {
+    return
   }
+  if (!githubRepo.data.description) {
+    return
+  }
+  if (project.pkg.description === githubRepo.data.description) {
+    log("Description already uptodate")
+    return
+  }
+  project.pkg.description = githubRepo.data.description
+  await project.writePkg()
+  await project.gitFlush("Added description to pkg")
 }
 
 async function main() {

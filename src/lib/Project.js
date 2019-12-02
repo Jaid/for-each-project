@@ -4,6 +4,7 @@ import fsp from "@absolunet/fsp"
 import gitFlush from "git-flush"
 import simpleGit from "simple-git/promise"
 import chalk from "chalk"
+import zahl from "zahl"
 
 const log = message => {
   process.stdout.write(`╎ ${chalk.yellow(message)}\n`)
@@ -15,6 +16,11 @@ export default class Project {
    * @type {string}
    */
   directory = null
+
+  /**
+   * @type {Object}
+   */
+  pkg = null
 
   constructor(directory) {
     this.directory = directory
@@ -30,7 +36,7 @@ export default class Project {
    * @return {Promise<void>}
    */
   async writePkg(pkg) {
-    await fsp.outputFile(this.relativeFile("package.json"), JSON.stringify(pkg, null, 2))
+    await fsp.outputFile(this.relativeFile("package.json"), JSON.stringify(pkg || this.pkg, null, 2))
   }
 
   /**
@@ -91,6 +97,19 @@ export default class Project {
     if (result) {
       log(`Commit: ${message}`)
     }
+  }
+
+  /**
+   * @return {Promise<boolean>}
+   */
+  async pull() {
+    const gitRepository = simpleGit(this.directory)
+    const result = await gitRepository.pull()
+    const hasChanges = Boolean(result.files.length)
+    if (hasChanges) {
+      log(`Pulled ${zahl(result.files, "file change")}`)
+    }
+    return hasChanges
   }
 
   relativeFile(relativePath) {

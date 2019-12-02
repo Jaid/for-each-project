@@ -27,6 +27,10 @@ export default async job => {
     const time = Date.now()
     const project = new Project(dir)
     await project.init()
+    if (project.folderName === "for-each-project") {
+      log(chalk.gray("This is me!"))
+      continue
+    }
     const gitRepository = simpleGit(dir)
     log(chalk.magenta(`${project.folderName} `.padEnd(60, "╴")))
     if (!project.pkg) {
@@ -43,7 +47,8 @@ export default async job => {
       log(chalk.gray(`${project.folderName} is dirty`))
       continue
     }
-    await job(project, indentLog)
+    await project.pull()
+    { await job(project, indentLog) }
     await project.gitFlush("Modified in bulk with jaid/for-each-project")
     log(`Processed ${project.folderName} in ${readableMs(Date.now() - time)}`)
   }

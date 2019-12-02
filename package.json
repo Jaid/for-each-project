@@ -11,7 +11,8 @@
     "globby": "^10.0.1",
     "has-content": "^1.1.0",
     "readable-ms": "^2.0.1",
-    "simple-git": "^1.126.0"
+    "simple-git": "^1.126.0",
+    "zahl": "^2.0.3"
   },
   "devDependencies": {
     "acorn": "^7.1.0",
