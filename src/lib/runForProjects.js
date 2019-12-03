@@ -1,8 +1,8 @@
-import globby from "globby"
-import readableMs from "readable-ms"
 import chalk from "chalk"
-import simpleGit from "simple-git/promise"
+import globby from "globby"
 import {isEmpty} from "has-content"
+import readableMs from "readable-ms"
+import simpleGit from "simple-git/promise"
 
 import Project from "./Project"
 

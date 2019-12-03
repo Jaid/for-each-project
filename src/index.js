@@ -13,7 +13,7 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-
+  await project.eslintFix()
 }
 
 async function main() {

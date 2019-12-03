@@ -7,6 +7,7 @@
     "@babel/runtime": "^7.7.4",
     "@octokit/rest": "^16.35.0",
     "chalk": "^3.0.0",
+    "execa": "^3.4.0",
     "git-flush": "^2.0.0",
     "globby": "^10.0.1",
     "has-content": "^1.1.0",

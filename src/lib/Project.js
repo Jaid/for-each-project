@@ -1,9 +1,10 @@
-import path from "path"
-
 import fsp from "@absolunet/fsp"
-import gitFlush from "git-flush"
-import simpleGit from "simple-git/promise"
 import chalk from "chalk"
+import execa from "execa"
+import gitFlush from "git-flush"
+import hasContent from "has-content"
+import path from "path"
+import simpleGit from "simple-git/promise"
 import zahl from "zahl"
 
 const log = message => {
@@ -87,6 +88,7 @@ export default class Project {
 
   /**
    * @param {string} message
+   * @return {Promise<boolean>}
    */
   async gitFlush(message) {
     const result = await gitFlush(message, {
@@ -97,6 +99,7 @@ export default class Project {
     if (result) {
       log(`Commit: ${message}`)
     }
+    return Boolean(result)
   }
 
   /**
@@ -112,8 +115,20 @@ export default class Project {
     return hasChanges
   }
 
+  /**
+   * @param {string} relativePath
+   */
   relativeFile(relativePath) {
     return path.resolve(this.directory, relativePath)
+  }
+
+  /**
+   * @param {string} relativePath
+   * @return {Promise<boolean>}
+   */
+  async relativeFileExists(relativePath) {
+    const exists = await fsp.pathExists(this.relativeFile(relativePath))
+    return exists
   }
 
   /**
@@ -131,6 +146,42 @@ export default class Project {
    */
   async writeFile(relativePath, text) {
     await fsp.outputFile(this.relativeFile(relativePath), text)
+  }
+
+  /**
+   * @param {string} file
+   * @param {string[]} args
+   * @param {import("execa").Options} options
+   * @return {Promise<import("execa").ExecaReturnValue<string>>}
+   */
+  async exec(file, args, options) {
+    let command = `cd ${this.directory} && ${file}`
+    if (hasContent(args)) {
+      command += ` ${args.join(" ")}`
+    }
+    log(chalk.greenBright(command))
+    const result = await execa(file, args, {
+      cwd: this.directory,
+      ...options,
+    })
+    return result
+  }
+
+  async eslintFix() {
+    const eslintScriptFile = this.relativeFile("node_modules/.bin/eslint")
+    const eslintScriptFileExists = await fsp.pathExists(eslintScriptFile)
+    if (!eslintScriptFileExists) {
+      log(`${eslintScriptFile} does not exist, skipping fix`)
+      return
+    }
+    const execResult = await this.exec(eslintScriptFile, ["--fix", this.relativeFile("src")], {
+      reject: false,
+    })
+    log(`= ${execResult.exitCode}`)
+    const hasChanged = await this.gitFlush("Formatted code with `eslint --fix`")
+    if (hasChanged) {
+      await this.eslintFix()
+    }
   }
 
 }
