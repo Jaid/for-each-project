@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 
-import runForProjects from "lib/runForProjects"
-import octokit from "lib/octokit"
 import fsp from "@absolunet/fsp"
+
+import octokit from "lib/octokit"
+import runForProjects from "lib/runForProjects"
 
 import text from "./text.txt"
 
