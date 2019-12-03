@@ -32,7 +32,7 @@ export default async job => {
       continue
     }
     const gitRepository = simpleGit(dir)
-    log(chalk.magenta(`${project.folderName} `.padEnd(60, "╴")))
+    log(chalk.magenta(`╭ ${project.folderName} `.padEnd(60, "╴")))
     if (!project.pkg) {
       log(chalk.gray(`${project.folderName} has no pkg`))
       continue

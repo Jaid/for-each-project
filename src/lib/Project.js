@@ -8,7 +8,7 @@ import simpleGit from "simple-git/promise"
 import zahl from "zahl"
 
 const log = message => {
-  process.stdout.write(`╎ ${chalk.yellow(message)}\n`)
+  process.stdout.write(`${chalk.magenta("╎")} ${chalk.yellow(message)}\n`)
 }
 
 export default class Project {
