@@ -1,21 +1,28 @@
-import runForProjects from "lib/runForProjects"
-
-/**
- * @param {import("lib/Project").default} project
- * @param {(string) => void} log
- * @return {Promise<void>}
- */
-async function job(project, log) {
-  const prepar = project.getScript("preparActionJest")
-  if (prepar) {
-    log("HELP")
-  }
-}
-
-async function main() {
-  await runForProjects(job)
-}
-
-main().catch(error => {
-  console.error(error)
-})
+name: Validate and autofix
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: 0 0 * * 1 # Every monday
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: actions/checkout
+        uses: actions/checkout@v1.2.0
+      - name: actions/setup-node
+        uses: actions/setup-node@v1.3.0
+        with:
+          node-version: "12.13.1"
+      - name: npm install
+        uses: jaid/action-npm-install@master
+      - name: Jest
+        uses: jaid/action-jest@master
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Uptodater
+        uses: jaid/action-uptodater@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fix: "true"
+          approve: "true"
