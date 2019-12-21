@@ -14,7 +14,7 @@ import text from "./text.txt"
  */
 async function job(project, log) {
   await project.writeFile(".editorconfig", text)
-  await project.gitFlush("manage: Improved .editorconfig for md and txt files")
+  await project.gitFlush("manage: Improved .editorconfig for md, hbs and txt files")
 }
 
 async function main() {
