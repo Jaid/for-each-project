@@ -13,13 +13,8 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-  const exists = await project.relativeFileExists(".github/workflows/validate.yml")
-  if (!exists) {
-    log("validte.yml not here, skip")
-    return
-  }
-  await project.writeFile(".github/workflows/validate.yml", text)
-  await project.gitFlush("manage: Removed Jaid/action-readme from workflow")
+  await project.writeFile(".editorconfig", text)
+  await project.gitFlush("manage: Improved .editorconfig for md and txt files")
 }
 
 async function main() {

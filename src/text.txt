@@ -1,28 +1,18 @@
-name: Validate and autofix
-on:
-  push:
-    branches: [master]
-  schedule:
-    - cron: 0 0 * * 1 # Every monday
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: actions/checkout
-        uses: actions/checkout@v1.2.0
-      - name: actions/setup-node
-        uses: actions/setup-node@v1.3.0
-        with:
-          node-version: "12.13.1"
-      - name: npm install
-        uses: jaid/action-npm-install@master
-      - name: Jest
-        uses: jaid/action-jest@master
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: Uptodater
-        uses: jaid/action-uptodater@master
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fix: "true"
-          approve: "true"
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = false
+trim_trailing_whitespace = true
+
+[*.md]
+trim_trailing_whitespace = true
+
+[*.txt]
+trim_trailing_whitespace = true
+
+[/package.json]
+insert_final_newline = true # npm install rewrites the JSON file with a final newline, so we manually keep them to prevent unneeded stashes
