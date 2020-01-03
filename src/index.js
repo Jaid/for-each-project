@@ -13,8 +13,7 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-  await project.writeFile(".editorconfig", text)
-  await project.gitFlush("Improved .editorconfig for md, hbs and txt files")
+
 }
 
 async function main() {
