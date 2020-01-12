@@ -13,7 +13,6 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-
 }
 
 async function main() {

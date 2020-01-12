@@ -167,6 +167,22 @@ export default class Project {
     return result
   }
 
+  /**
+   * @param {string} file
+   * @param {string[]} args
+   * @param {import("execa").Options} options
+   * @return {Promise<import("execa").ExecaReturnValue<string>>}
+   */
+  async execVerbose(file, args, options) {
+    return this.exec(file, args, {
+      stdio: "inherit",
+      ...options,
+    })
+  }
+
+  /**
+   * @return {Promise<void>}
+   */
   async eslintFix() {
     const eslintScriptFile = this.relativeFile("node_modules/.bin/eslint")
     const eslintScriptFileExists = await fsp.pathExists(eslintScriptFile)
@@ -182,6 +198,52 @@ export default class Project {
     if (hasChanged) {
       await this.eslintFix()
     }
+  }
+
+  /**
+   * @return {Promise<void>}
+   */
+  async upgradeAndRebuildDependencies() {
+    await this.npmCheckUpdatesUpgrade()
+    await this.emptyDir("node_modules")
+    await this.unlink("package-lock.json")
+    await this.npmInstall()
+  }
+
+  /**
+   * @return {Promise<void>}
+   */
+  async unlink(file) {
+    if (!this.relativeFileExists(file)) {
+      return false
+    }
+    log(`Deleting ${file}`)
+    await fsp.unlink(this.relativeFile(file))
+  }
+
+  /**
+   * @return {Promise<void>}
+   */
+  async emptyDir(file) {
+    if (!this.relativeFileExists(file)) {
+      return false
+    }
+    log(`Emptying ${file}`)
+    await fsp.emptyDir(this.relativeFile(file))
+  }
+
+  /**
+   * @return {Promise<void>}
+   */
+  async npmInstall() {
+    await this.exec("npm", ["install"])
+  }
+
+  /**
+   * @return {Promise<void>}
+   */
+  async npmCheckUpdatesUpgrade() {
+    await this.execVerbose("ncu", ["--upgrade"])
   }
 
 }
