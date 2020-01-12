@@ -126,8 +126,9 @@ export default class Project {
    * @param {string} relativePath
    * @return {Promise<boolean>}
    */
-  async relativeFileExists(relativePath) {
-    const exists = await fsp.pathExists(this.relativeFile(relativePath))
+  async hasFile(relativePath) {
+    const absoluteFile = this.relativeFile(relativePath)
+    const exists = await fsp.pathExists(absoluteFile)
     return exists
   }
 
@@ -214,7 +215,8 @@ export default class Project {
    * @return {Promise<void>}
    */
   async unlink(file) {
-    if (!this.relativeFileExists(file)) {
+    const hasFile = await this.hasFile(file)
+    if (!hasFile) {
       return false
     }
     log(`Deleting ${file}`)
@@ -225,7 +227,8 @@ export default class Project {
    * @return {Promise<void>}
    */
   async emptyDir(file) {
-    if (!this.relativeFileExists(file)) {
+    const hasFile = await this.hasFile(file)
+    if (!hasFile) {
       return false
     }
     log(`Emptying ${file}`)
@@ -244,6 +247,13 @@ export default class Project {
    */
   async npmCheckUpdatesUpgrade() {
     await this.execVerbose("ncu", ["--upgrade"])
+  }
+
+  /**
+   * @return {Promise<void>}
+   */
+  async runTldw() {
+    await this.exec("tldw")
   }
 
 }
