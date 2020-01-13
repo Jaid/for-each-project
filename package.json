@@ -4,28 +4,28 @@
   "author": "Jaid <jaid.jsx@gmail.com> (https://github.com/Jaid)",
   "dependencies": {
     "@absolunet/fsp": "^1.6.2",
-    "@babel/runtime": "^7.7.4",
-    "@octokit/rest": "^16.35.0",
+    "@babel/runtime": "^7.8.0",
+    "@octokit/rest": "^16.36.0",
     "chalk": "^3.0.0",
-    "execa": "^3.4.0",
-    "git-flush": "^2.0.0",
-    "globby": "^10.0.1",
+    "execa": "^4.0.0",
+    "git-flush": "^2.0.3",
+    "globby": "^11.0.0",
     "has-content": "^1.1.0",
     "readable-ms": "^2.0.1",
-    "simple-git": "^1.126.0",
-    "zahl": "^2.0.3"
+    "simple-git": "^1.129.0",
+    "zahl": "^2.0.6"
   },
   "devDependencies": {
     "acorn": "^7.1.0",
     "babel-jest": "^24.9.0",
-    "babel-preset-jaid": "^6.11.1",
+    "babel-preset-jaid": "^7.3.1",
     "browserslist-config-jaid-node": "^2.2.2",
-    "eslint": "^6.7.2",
-    "eslint-config-jaid": "^1.41.0",
+    "eslint": "^6.8.0",
+    "eslint-config-jaid": "^1.42.0",
     "jest": "^24.9.0",
     "rimraf": "^3.0.0",
-    "webpack": "^4.41.2",
-    "webpack-config-jaid": "^5.32.1"
+    "webpack": "^4.41.5",
+    "webpack-config-jaid": "^11.0.0"
   },
   "name": "for-each-project",
   "scripts": {
