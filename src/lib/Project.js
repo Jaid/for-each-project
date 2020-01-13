@@ -2,6 +2,7 @@ import fsp from "@absolunet/fsp"
 import chalk from "chalk"
 import execa from "execa"
 import gitFlush from "git-flush"
+import got from "got"
 import hasContent from "has-content"
 import path from "path"
 import simpleGit from "simple-git/promise"
@@ -264,6 +265,25 @@ export default class Project {
    */
   async runTldw() {
     await this.exec("tldw")
+  }
+
+  /**
+   * @return {Promise<boolean>}
+   */
+  async isMineOnNpm() {
+    const response = await got(`https://registry.npmjs.org/${this.folderName}`, {
+      responseType: "json",
+      throwHttpErrors: false,
+    })
+    if (response.statusCode !== 200) {
+      return false
+    }
+    const maintainers = response.body.maintainers
+    if (!Array.isArray(maintainers)) {
+      return false
+    }
+    const me = maintainers.find(maintainer => maintainer.name.toLowerCase() === "jaid")
+    return Boolean(me)
   }
 
 }

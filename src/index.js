@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import fsp from "@absolunet/fsp"
+import got from "got"
 
 import octokit from "lib/octokit"
 import runForProjects from "lib/runForProjects"
