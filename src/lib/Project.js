@@ -37,7 +37,17 @@ export default class Project {
    * @return {Promise<void>}
    */
   async writePkg(pkg) {
-    await fsp.outputFile(this.relativeFile("package.json"), JSON.stringify(pkg || this.pkg, null, 2))
+    const file = this.relativeFile("package.json")
+    await fsp.outputFile(file, JSON.stringify(pkg || this.pkg, null, 2))
+  }
+
+  /**
+   * @param {Object} pkg
+   * @return {Promise<void>}
+   */
+  async setPkgValue(field, value) {
+    this.pkg[field] = value
+    await this.writePkg(this.pkg)
   }
 
   /**
