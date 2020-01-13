@@ -1,6 +1,7 @@
 # for-each-project
 
 
+Personal tool that iterates through all my projects to make bulk changes.
 
 
 
