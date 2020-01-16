@@ -14,14 +14,9 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-  // if (!project.pkg.name) {
-  //   log("package.json#name not set, skipping")
-  //   return
-  // }
-  if (project.hasProductionDependency("jaid-core") && !project.hasDevelopmentDependency("yargs")) {
-    log("Adding missing dependency")
-    await project.exec("pover + yargs")
-    await project.gitFlush("Added dependency `yargs`")
+  if (!project.pkg.name) {
+    log("package.json#name not set, skipping")
+    return
   }
 }
 
