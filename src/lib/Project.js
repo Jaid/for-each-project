@@ -1,9 +1,10 @@
 import fsp from "@absolunet/fsp"
 import chalk from "chalk"
+import ensureArray from "ensure-array"
 import execa from "execa"
 import gitFlush from "git-flush"
 import got from "got"
-import hasContent from "has-content"
+import hasContent, {isEmpty} from "has-content"
 import path from "path"
 import simpleGit from "simple-git/promise"
 import zahl from "zahl"
@@ -265,6 +266,47 @@ export default class Project {
    */
   async runTldw() {
     await this.exec("tldw")
+  }
+
+  /**
+   * @param {string} dependency
+   * @param {string|string[]} dependencyField
+   * @return {boolean}
+   */
+  hasDependency(dependency, dependencyField) {
+    const dependencyFields = dependencyField ? ensureArray(dependencyField) : [
+      "dependencies",
+      "devDependencies",
+      "optionalDependencies",
+      "peerDependencies",
+      "bundleDependencies",
+      "bundledDependencies",
+    ]
+    if (isEmpty(this.pkg)) {
+      return false
+    }
+    for (const key of dependencyFields) {
+      if (this.pkg[key]?.[dependency]) {
+        return true
+      }
+    }
+    return false
+  }
+
+  /**
+   * @param {string} dependency
+   * @return {boolean}
+   */
+  hasProductionDependency(dependency) {
+    return this.hasDependency(dependency, "dependencies")
+  }
+
+  /**
+   * @param {string} dependency
+   * @return {boolean}
+   */
+  hasDevelopmentDependency(dependency) {
+    return this.hasDependency(dependency, "devDependencies")
   }
 
   /**
