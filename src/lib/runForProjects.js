@@ -27,12 +27,12 @@ export default async job => {
     const time = Date.now()
     const project = new Project(dir)
     await project.init()
+    log(chalk.magenta(`╭ ${project.folderName} `.padEnd(60, "╴")))
     if (project.folderName === "for-each-project") {
       log(chalk.gray("This is me!"))
       continue
     }
     const gitRepository = simpleGit(dir)
-    log(chalk.magenta(`╭ ${project.folderName} `.padEnd(60, "╴")))
     if (!project.pkg) {
       log(chalk.gray(`${project.folderName} has no pkg`))
       continue
