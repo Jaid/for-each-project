@@ -14,10 +14,7 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-  if (!project.pkg.name) {
-    log("package.json#name not set, skipping")
-    return
-  }
+
 }
 
 async function main() {
