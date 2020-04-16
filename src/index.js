@@ -14,7 +14,11 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-
+  const file = ".github/workflows/publishPackage.yml"
+  const hasFile = await project.hasFile(file)
+  if (hasFile) {
+    await project.writeFile(file, text)
+  }
 }
 
 async function main() {
