@@ -32,5 +32,8 @@
   "name": "for-each-project",
   "scripts": {
     "prepareActionJest": "npm run build:prod"
-  }
+  },
+  "description": "Personal tool that iterates through all my projects to make bulk changes.",
+  "homepage": "https://github.com/Jaid/for-each-project",
+  "keywords": []
 }
