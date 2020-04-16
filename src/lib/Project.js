@@ -226,6 +226,15 @@ export default class Project {
   /**
    * @return {Promise<void>}
    */
+  async rebuildDependencies() {
+    await this.emptyDir("node_modules")
+    await this.unlink("package-lock.json")
+    await this.npmInstall()
+  }
+
+  /**
+   * @return {Promise<void>}
+   */
   async unlink(file) {
     const hasFile = await this.hasFile(file)
     if (!hasFile) {
