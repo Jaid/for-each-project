@@ -7,6 +7,7 @@
     "outDir": "dist/typescript",
     "declaration": true,
     "emitDeclarationOnly": true,
+    "resolveJsonModule": true,
     "paths": {
       "lib/*": [
         "src/lib/*"
