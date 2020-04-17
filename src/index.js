@@ -15,13 +15,6 @@ import text from "./text.txt"
  */
 async function job(project, log) {
 
-  const dependsOnRuntime = project.hasDependency("@babel/runtime")
-  if (!dependsOnRuntime) {
-    return
-  }
-  await project.npmCheckUpdatesUpgrade()
-  await project.uninstallDependency("@babel/runtime")
-
 }
 
 async function main() {
