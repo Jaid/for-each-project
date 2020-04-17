@@ -164,7 +164,7 @@ export default class Project {
   /**
    * @param {string} file
    * @param {string[]} args
-   * @param {import("execa").Options} options
+   * @param {import("execa").Options} [options]
    * @return {Promise<import("execa").ExecaReturnValue<string>>}
    */
   async exec(file, args, options) {
@@ -279,7 +279,7 @@ export default class Project {
 
   /**
    * @param {string} dependency
-   * @param {string|string[]} dependencyField
+   * @param {string|string[]} [dependencyField]
    * @return {boolean}
    */
   hasDependency(dependency, dependencyField) {
@@ -316,6 +316,14 @@ export default class Project {
    */
   hasDevelopmentDependency(dependency) {
     return this.hasDependency(dependency, "devDependencies")
+  }
+
+  /**
+   * @param {string} dependency
+   * @return {Promise<void>}
+   */
+  async uninstallDependency(dependency) {
+    await this.exec("npm", ["remove", dependency])
   }
 
   /**
