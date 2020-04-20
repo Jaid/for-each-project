@@ -35,5 +35,12 @@
   },
   "description": "Personal tool that iterates through all my projects to make bulk changes.",
   "homepage": "https://github.com/Jaid/for-each-project",
-  "keywords": []
+  "keywords": [
+    "cli",
+    "for-each-project",
+    "personal",
+    "project-management",
+    "project-manager",
+    "tool"
+  ]
 }
