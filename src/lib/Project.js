@@ -68,7 +68,7 @@ export default class Project {
 
   /**
    * @param {string} relativePath
-   * @return {Promise<string>}
+   * @return {Promise<Object>}
    */
   async readFileJson(relativePath) {
     const file = this.relativeFile(relativePath)
@@ -76,8 +76,19 @@ export default class Project {
     if (!exists) {
       return null
     }
-    const text = await fsp.readJson5(file)
-    return text
+    const object = await fsp.readJson5(file)
+    return object
+  }
+
+  /**
+   * @param {string} relativePath
+   * @param {Object} object
+   * @return {Promise<void>}
+   */
+  async writeFileJson(relativePath, object) {
+    const file = this.relativeFile(relativePath)
+    const text = JSON.stringify(object, null, 2)
+    await this.writeFile(file, text)
   }
 
   /**
@@ -158,7 +169,9 @@ export default class Project {
    * @return {Promise<void>}
    */
   async writeFile(relativePath, text) {
-    await fsp.outputFile(this.relativeFile(relativePath), text)
+    const file = this.relativeFile(relativePath)
+    await fsp.outputFile(file, text)
+    log(`Wrote ${text.length} chars to ${relativePath}`)
   }
 
   /**
