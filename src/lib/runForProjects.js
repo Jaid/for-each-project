@@ -1,6 +1,5 @@
 import chalk from "chalk"
 import globby from "globby"
-import {isEmpty} from "has-content"
 import readableMs from "readable-ms"
 import simpleGit from "simple-git/promise"
 
@@ -11,7 +10,7 @@ const log = message => {
 }
 
 const indentLog = message => {
-  log(`╎ ${chalk.blueBright(message)}`)
+  log(`${chalk.magenta("╎")} ${chalk.blueBright(message)}`)
 }
 
 /**
@@ -20,7 +19,7 @@ const indentLog = message => {
 export default async job => {
   const dirs = await globby("*", {
     absolute: true,
-    cwd: "E:/Projects",
+    cwd: "P:/",
     onlyDirectories: true,
   })
   for (const dir of dirs) {
@@ -48,7 +47,7 @@ export default async job => {
       continue
     }
     await project.pull()
-    { await job(project, indentLog) }
+    await job(project, indentLog)
     await project.gitFlush("Modified in bulk with jaid/for-each-project")
     log(`Processed ${project.folderName} in ${readableMs(Date.now() - time)}`)
   }
