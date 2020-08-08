@@ -14,7 +14,35 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-
+  const hasFile = await project.hasFile("tsconfigBase.json")
+  if (hasFile) {
+    log("tsconfig.json not given, skipping")
+    return
+  }
+  const tsconfigBase = await project.readFileJson("tsconfigBase.json")
+  const tsconfig = await project.readFileJson("tsconfig.json")
+  if (tsconfig === null) {
+    log("tsconfig.json not given, skipping")
+    return
+  }
+  if (tsconfigBase === null) {
+    log("tsconfigBase.json not given, creating")
+    await project.writeFileJson("tsconfigBase.json", {})
+    await project.gitFlush("Created tsconfigBase.json")
+    return
+  }
+  return
+  if (!tsconfigBase.typeAcquisition) {
+    log("tsconfigBase.typeAcquisition not given, skipping")
+    return
+  }
+  delete tsconfigBase.typeAcquisition
+  tsconfig.typeAcquisition = {
+    enable: true,
+  }
+  await project.writeFileJson("tsconfig.json", tsconfig)
+  await project.writeFileJson("tsconfigBase.json", tsconfigBase)
+  await project.gitFlush("Fixed tsconfig for Automatic Type Acquisition in VSCode")
 }
 
 async function main() {
