@@ -19,7 +19,7 @@ const indentLog = message => {
 export default async job => {
   const dirs = await globby("*", {
     absolute: true,
-    cwd: "P:/",
+    cwd: "P:/Git",
     onlyDirectories: true,
   })
   for (const dir of dirs) {

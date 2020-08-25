@@ -340,6 +340,22 @@ export default class Project {
   }
 
   /**
+   * @param {string} dependency
+   * @return {Promise<void>}
+   */
+  async addProductionDependency(dependency) {
+    await this.exec("npm", ["install", "--save", dependency])
+  }
+
+  /**
+   * @param {string} dependency
+   * @return {Promise<void>}
+   */
+  async addDevelopmentDependency(dependency) {
+    await this.exec("npm", ["install", "--save-dev", dependency])
+  }
+
+  /**
    * @return {Promise<boolean>}
    */
   async isMineOnNpm() {
