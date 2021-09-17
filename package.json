@@ -27,8 +27,8 @@
     "jest": "^26.4.2",
     "rimraf": "^3.0.2",
     "tsconfig-jaid": "^2.0.1",
-    "webpack": "^4.44.2",
-    "webpack-config-jaid": "^11.12.3"
+    "webpack": "^5.53.0",
+    "webpack-config-jaid": "^16.0.0"
   },
   "name": "for-each-project",
   "scripts": {
