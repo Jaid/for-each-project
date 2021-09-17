@@ -3,9 +3,8 @@
 import fsp from "@absolunet/fsp"
 import got from "got"
 
-import octokit from "lib/octokit"
-import runForProjects from "lib/runForProjects"
-
+import octokit from "./lib/octokit.js"
+import runForProjects from "./lib/runForProjects.js"
 import text from "./text.txt"
 
 /**
@@ -14,16 +13,7 @@ import text from "./text.txt"
  * @return {Promise<void>}
  */
 async function job(project, log) {
-  if (!project.pkg) {
-    log("No pkg")
-    return
-  }
-  if (project.pkg.type === "module") {
-    log("Already module")
-    return
-  }
-  await project.setPkgValue("type", "module")
-  await project.gitFlush("manage: Added “type: module” to pkg")
+  await project.gitFlush("Changed something")
 }
 
 async function main() {

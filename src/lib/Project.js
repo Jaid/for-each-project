@@ -7,7 +7,7 @@ import gitFlush from "git-flush"
 import got from "got"
 import hasContent, {isEmpty} from "has-content"
 import path from "path"
-import simpleGit from "simple-git/promise"
+import simpleGit from "simple-git/promise.js"
 import zahl from "zahl"
 
 const log = message => {

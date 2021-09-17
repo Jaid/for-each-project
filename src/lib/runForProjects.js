@@ -2,9 +2,9 @@ import chalk from "chalk"
 import globby from "globby"
 import hasContent from "has-content"
 import readableMs from "readable-ms"
-import simpleGit from "simple-git/promise"
+import simpleGit from "simple-git/promise.js"
 
-import Project from "./Project"
+import Project from "./Project.js"
 
 const log = message => {
   process.stdout.write(`${message}\n`)
