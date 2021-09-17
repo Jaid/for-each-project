@@ -1,5 +1,6 @@
 import fsp from "@absolunet/fsp"
 import chalk from "chalk"
+import crypto from "crypto"
 import ensureArray from "ensure-array"
 import execa from "execa"
 import gitFlush from "git-flush"
@@ -153,6 +154,16 @@ export default class Project {
     const absoluteFile = this.relativeFile(relativePath)
     const exists = await fsp.pathExists(absoluteFile)
     return exists
+  }
+
+  /**
+   * @param {string} relativePath
+   * @return {Promise<string>}
+   */
+  async md5File(relativePath) {
+    const content = await this.readFileText(relativePath)
+    const hash = crypto.createHash("sha256").update(content).digest("hex")
+    return hash
   }
 
   /**
