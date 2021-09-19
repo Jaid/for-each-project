@@ -1,8 +1,8 @@
 import chalk from "chalk"
-import globby from "globby"
-import hasContent from "has-content"
-import readableMs from "readable-ms"
-import simpleGit from "simple-git/promise.js"
+import {globby} from "globby"
+import hasContent from "./esm/has-content.js"
+import readableMs from "./esm/readable-ms.js"
+import simpleGit from "simple-git"
 
 import Project from "./Project.js"
 
@@ -62,6 +62,7 @@ export default async job => {
       log(`Processed ${project.folderName} in ${readableMs(Date.now() - time)}`)
       okCount++
     } catch (error) {
+      throw error
       log(error)
       errorNames.push(project.folderName)
     }

@@ -3,11 +3,11 @@ import chalk from "chalk"
 import crypto from "crypto"
 import ensureArray from "ensure-array"
 import execa from "execa"
-import gitFlush from "git-flush"
+import gitFlush from "lib/esm/git-flush.js"
 import got from "got"
 import hasContent, {isEmpty} from "has-content"
 import path from "path"
-import simpleGit from "simple-git/promise.js"
+import simpleGit from "simple-git"
 import zahl from "zahl"
 
 const log = message => {
