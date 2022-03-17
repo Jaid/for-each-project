@@ -14,7 +14,7 @@
     "got": "^11.8.2",
     "has-content": "^1.1.1",
     "readable-ms": "^2.0.4",
-    "simple-git": "^2.45.1",
+    "simple-git": "^3.3.0",
     "zahl": "^2.0.6"
   },
   "devDependencies": {
