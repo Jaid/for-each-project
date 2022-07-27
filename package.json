@@ -11,7 +11,7 @@
     "execa": "^5.1.1",
     "git-flush": "^2.0.3",
     "globby": "^12.0.2",
-    "got": "^11.8.2",
+    "got": "^11.8.5",
     "has-content": "^1.1.1",
     "readable-ms": "^2.0.4",
     "simple-git": "^2.45.1",
